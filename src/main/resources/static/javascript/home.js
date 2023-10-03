@@ -94,16 +94,43 @@ async function handleVehicleEdit(vehicleId) {
     }
 }
 
-const createVehicleCards = (array) => {
+const createVehicleCards = async (array) => {
     vehicleContainer.innerHTML = '';
-    array.forEach(obj => {
+
+    for (const obj of array) {
         let vehicleCard = document.createElement("div");
-        vehicleCard.classList.add("m-2");
+        vehicleCard.classList.add("m-2", "card");
+
+        const gasFillings = await fetchGasFillings(obj.id);
+        let overallConsumptionInfo = '';
+        let consumptionSinceLastFill = '';
+
+        if (gasFillings.length >= 2) {
+            // Calculate overall gas consumption
+            const totalVolume = gasFillings.slice(1).reduce((sum, filling) => sum + filling.fillingVolume, 0);
+            const totalMileage = gasFillings[gasFillings.length - 1].currentMileage - gasFillings[0].currentMileage;
+            const overallConsumption = totalMileage / totalVolume;
+
+            // Display overall gas consumption with one decimal place
+            overallConsumptionInfo = `Overall Consumption: ${overallConsumption.toFixed(1)}`;
+
+            // Calculate consumption since the last gas filling
+            const lastFill = gasFillings[gasFillings.length - 1];
+            const consumptionSinceLast = (lastFill.currentMileage - gasFillings[gasFillings.length - 2].currentMileage) / lastFill.fillingVolume;
+
+            // Display consumption since last gas filling with one decimal place
+            consumptionSinceLastFill = `Consumption Since Last Fill: ${consumptionSinceLast.toFixed(1)}`;
+        } else {
+            // Display a warning if less than 2 gas fillings
+            overallConsumptionInfo = 'You need at least two Gas Fillings to calculate your consumption';
+        }
 
         vehicleCard.innerHTML = `
             <div class="card d-flex" style="width: 18rem; height: 18rem;">
                 <div class="card-body d-flex flex-column  justify-content-between" style="height: available">
-                    <p class="card-text">${obj.vehicleName}</p>
+                    <p class="card-text" style ="font-size: 2em;">${obj.vehicleName}</p>
+                    <p class="card-text">${overallConsumptionInfo}</p>
+                    <p class="card-text">${consumptionSinceLastFill}</p>
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-danger" onclick="handleDelete(${obj.id})">Delete</button>
                         <button onclick="getVehicleById(${obj.id})" type="button" class="btn btn-primary"
@@ -119,7 +146,7 @@ const createVehicleCards = (array) => {
             </div>
         `;
         vehicleContainer.append(vehicleCard);
-    });
+    }
 };
 
 // ... (previous code)
@@ -128,11 +155,34 @@ let addGasFillingButton;
 let gasFillingModal = new bootstrap.Modal(document.getElementById('gas-filling-modal'));
 
 let gasFillingModalShown = false;
+let currentGasFillingVehicleId;
 
-function openGasFillingModal(vehicleId) {
+async function openGasFillingModal(vehicleId) {
+    currentGasFillingVehicleId = vehicleId;
+    console.log(vehicleId)
     // Optionally, you can populate the modal with information related to the selected vehicle.
     document.getElementById("gas-filling-volume").value = "";
     document.getElementById("gas-filling-mileage").value = "";
+
+    const gasFillingsList = document.getElementById('gas-fillings-list');
+    gasFillingsList.innerHTML = ''; // Clear the list
+
+        // Fetch gas fillings data for the selected vehicle
+    const gasFillings = await fetchGasFillings(vehicleId);
+
+    if (gasFillings.length > 0) {
+            // Populate the list with gas fillings data
+        gasFillings.forEach((filling) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Volume: ${filling.fillingVolume}, Mileage: ${filling.currentMileage}`;
+            gasFillingsList.appendChild(listItem);
+        });
+    } else {
+            // Display a message if there are no gas fillings
+            const listItem = document.createElement('li');
+            listItem.textContent = 'No gas fillings available for this vehicle.';
+            gasFillingsList.appendChild(listItem);
+    }
 
     // To open the Gas Filling modal, trigger the modal to show:
     gasFillingModal.show();
@@ -140,7 +190,7 @@ function openGasFillingModal(vehicleId) {
     if (!gasFillingModalShown) {
         addGasFillingButton = document.getElementById('add-gas-filling-button');
         addGasFillingButton.addEventListener('click', () => {
-            handleGasFillingSubmit(vehicleId);
+            handleGasFillingSubmit(currentGasFillingVehicleId);
             gasFillingModal.hide(); // Hide the modal after adding gas filling
         });
         gasFillingModalShown = true;
@@ -149,12 +199,14 @@ function openGasFillingModal(vehicleId) {
 
 
 async function handleGasFillingSubmit(vehicleId) {
+    console.log(vehicleId)
     const gasFillingVolume = document.getElementById("gas-filling-volume").value;
     const gasFillingMileage = document.getElementById("gas-filling-mileage").value;
 
     const gasFillingData = {
         fillingVolume: parseFloat(gasFillingVolume),
         currentMileage: parseFloat(gasFillingMileage),
+        vehicleId: vehicleId,
     };
 
     const apiUrl = `http://localhost:8080/api/v1/gasfillings/vehicle/${vehicleId}`;
@@ -169,6 +221,8 @@ async function handleGasFillingSubmit(vehicleId) {
         });
         if (response.status === 200) {
             // Gas filling added successfully, you can perform any additional actions here if needed
+            getVehicles(userId);
+
             console.log("Gas filling added successfully.");
         } else {
             // Handle errors here, if necessary
@@ -185,6 +239,20 @@ async function handleGasFillingSubmit(vehicleId) {
 }
 
 // ... (rest of your code)
+
+async function fetchGasFillings(vehicleId) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/gasfillings/vehicle/${vehicleId}`, {
+            method: "GET",
+            headers: headers,
+        });
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error(err);
+        return [];
+    }
+}
 
 
 

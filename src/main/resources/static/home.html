@@ -11,8 +11,19 @@
     <link rel="stylesheet" href="./css/home.css" type="text/css">
     <title>Home</title>
 </head>
+<header>
+    <nav>
+        <div class="logo">
+            <h1>GasTrackerX</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+        </ul>
+    </nav>
+</header>
 <body>
-
 <a class="btn btn-danger navbar-btn" href="./login.html" onclick="handleLogout()">Logout</a>
 
 <div class="container" id="home-container">
@@ -68,6 +79,10 @@
                     </div>
                     <button type="button" id="add-gas-filling-button" class="btn btn-primary">Add</button>
                 </form>
+                <ul id="gas-fillings-list">
+                    <!-- Gas fillings will be dynamically added here -->
+                </ul>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
