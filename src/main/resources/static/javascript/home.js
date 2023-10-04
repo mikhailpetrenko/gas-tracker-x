@@ -2,6 +2,18 @@
 const cookieArr = document.cookie.split("=");
 const userId = cookieArr[1];
 
+function isUserLoggedIn() {
+    const cookieArr = document.cookie.split("=");
+    const userId = cookieArr[1];
+    return !!userId;
+}
+
+if (!isUserLoggedIn()) {
+    window.location.href = "login.html";
+}
+
+
+
 // DOM Elements
 const submitForm = document.getElementById("vehicle-form");
 const vehicleContainer = document.getElementById("vehicle-container");
@@ -253,9 +265,6 @@ async function fetchGasFillings(vehicleId) {
         return [];
     }
 }
-
-
-
 
 function handleLogout() {
     let c = document.cookie.split(";");

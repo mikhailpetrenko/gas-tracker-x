@@ -1,5 +1,6 @@
 #vehicle-container {
   display: flex;
+  margin-top: 20px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -11,39 +12,114 @@
     padding: 0;
     box-sizing: border-box;
 }
+@import url('https://fonts.cdnfonts.com/css/antiqua-2');
 
-/* Style the header */
-header {
-    background-color: #1E90FF; /* Change this to your desired header color */
-    color: #FFFFFF; /* Change this to your desired text color */
-    padding: 10px 0;
-    text-align: center;
+* {
+    margin: 0;
+    padding: 0;
 }
 
-/* Style the logo */
-.logo {
-    display: inline-block;
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-/* Style the navigation links */
-.nav-links {
-    list-style: none;
-    margin-top: 10px;
-}
-
-.nav-links li {
-    display: inline;
-    margin-right: 20px;
-}
-
-.nav-links a {
+a {
     text-decoration: none;
-    color: #FFFFFF; /* Change this to your desired link color */
-    transition: color 0.3s;
+    color: inherit;
 }
 
-.nav-links a:hover {
-    color: #FFD700; /* Change this to your desired hover color */
+body {
+    font: normal 18px 'Book Antiqua', sans-serif;
+    background: #C9D1C8;
+    color: #333;
+}
+
+main {
+    min-height: 100vh;
+}
+
+header {
+    background: #5B7065;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center; /* Center header text horizontally */
+}
+
+    h1{
+        font: normal 4em 'Book Antiqua', serif;
+        text-align:center;
+    }
+
+    #vehicle-input {
+        width: 200px; /* Adjust the width as needed */
+        margin: 0 auto; /* Center the input field horizontally */
+        margin-top: 20px;
+    }
+    .form-group {
+        text-align: center;
+    }
+
+    /* Add margin to the button to create spacing */
+    #submit-button {
+        margin-top: 30px;
+    }
+
+    .card {
+        background-color: #e4e8e3;
+    }
+
+
+
+
+nav {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+}
+
+nav a {
+    flex-grow: 1;
+    text-align: center;
+    padding: 1em;
+    position: relative;
+}
+
+/* Animation */
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    background: #333;
+    transition: 0.7s transform cubic-bezier(0.06, 0.9, 0.28, 1);
+}
+
+nav a:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* Style for all buttons (Delete, Edit, Add Gas Filling) */
+.btn-danger,
+.btn-primary,
+.btn-success {
+    background-color: #9ac6f5; /* Change to your desired color */
+    border-color: #9ac6f5; /* Change border color if needed */
+
+    padding: 5px 15px; /* Adjust the padding for button size */
+    border-radius: 10px; /* Adjust the border-radius for rounded corners */
+    margin-right: 10px; /* Add margin to create distance between buttons */
+    font-size: 14px; /* Adjust font size if needed */
+}
+
+.btn-danger {
+    background-color: #f29ba3; /* Change to your desired color */
+    border-color: #f29ba3; /* Change border color if needed */
+}
+
+/* Change the color of the success button (Add Gas Filling) */
+.btn-success {
+    background-color: #80a688; /* Change to your desired color */
+    border-color: #80a688; /* Change border color if needed */
 }

@@ -1,0 +1,119 @@
+@import url('https://fonts.cdnfonts.com/css/antiqua-2');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#login-username,
+#login-password {
+    max-width: 300px; /* Set a maximum width to limit the size */
+    margin: 0 auto; /* Center horizontally */
+}
+
+body {
+    font: normal 18px 'Book Antiqua', sans-serif;
+    background: #C9D1C8;
+    color: #333;
+}
+
+main {
+    min-height: 100vh;
+}
+
+header {
+    background: #5B7065;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center; /* Center header text horizontally */
+}
+
+h1 {
+    font: normal 4em 'Book Antiqua', serif;
+    text-align: center;
+}
+
+h3 {
+    font: normal 2em 'Book Antiqua', serif;
+    text-align: center;
+}
+
+nav {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+}
+
+nav a {
+    flex-grow: 1;
+    text-align: center;
+    padding: 1em;
+    position: relative;
+}
+
+/* Animation */
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    background: #333;
+    transition: 0.7s transform cubic-bezier(0.06, 0.9, 0.28, 1);
+}
+
+nav a:hover::after {
+    transform: scaleX(1);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style for buttons */
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Hover effect for buttons */
+.btn-primary:hover,
+.btn-secondary:hover {
+    background-color: #0056b3;
+}
+
+/* Center the form */
+.container-md {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh; /* This ensures the container takes the full viewport height */
+}

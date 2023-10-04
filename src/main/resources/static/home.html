@@ -12,27 +12,27 @@
     <title>Home</title>
 </head>
 <header>
+    <div class="logo">
+        <h1>GasTrackerX</h1>
+    </div>
     <nav>
-        <div class="logo">
-            <h1>GasTrackerX</h1>
-        </div>
-        <ul class="nav-links">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="register.html">Register</a></li>
-        </ul>
+        <a href="home.html">Home</a>
+        <a href="./login.html" onclick="handleLogout()">Logout</a>
     </nav>
 </header>
 <body>
-<a class="btn btn-danger navbar-btn" href="./login.html" onclick="handleLogout()">Logout</a>
+<!--<a class="btn btn-danger navbar-btn" href="./login.html" onclick="handleLogout()">Logout</a>-->
 
 <div class="container" id="home-container">
     <div id="vehicle-form-container">
         <form id="vehicle-form">
             <div class="form-group">
-                <textarea class="form-control" id="vehicle-input" placeholder="Add your vehicle..." rows="5"></textarea>
+                <input type="text" class="form-control" id="vehicle-input" placeholder="Add your vehicle...">
+                <button id="submit-button" type="submit" class="btn btn-primary mt-1">Submit</button>
+
+
+                <!--                <textarea class="form-control" id="vehicle-input" placeholder="Add your vehicle..." rows="5"></textarea>-->
             </div>
-            <button id="submit-button" type="submit" class="btn btn-primary mt-1">Submit</button>
         </form>
 
         <div id="vehicle-container" class="container-fluid"></div>
