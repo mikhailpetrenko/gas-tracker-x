@@ -1,11 +1,10 @@
 #vehicle-container {
   display: flex;
-  margin-top: 20px;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 10px;
+  flex-wrap: wrap; /* Enable wrapping if there are too many cards */
+  justify-content: center; /* Center the cards horizontally */
+  gap: 10px; /* Add some space between the cards */
 }
+
 
 * {
     margin: 0;

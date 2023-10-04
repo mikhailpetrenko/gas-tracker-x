@@ -38,4 +38,9 @@ public class GasFillingController {
     public void deleteGasFillingById(@PathVariable Long gasFillingId) {
         gasFillingService.deleteGasFillingById(gasFillingId);
     }
+
+    @DeleteMapping("/vehicle/{vehicleId}")
+    public void deleteGasFillingsByVehicleId(@PathVariable Long vehicleId) {
+        gasFillingService.deleteGasFillingsByVehicleId(vehicleId);
+    }
 }

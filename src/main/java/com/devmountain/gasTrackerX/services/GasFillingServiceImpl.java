@@ -47,6 +47,20 @@ public class GasFillingServiceImpl implements GasFillingService {
     }
 
     @Override
+    public void deleteGasFillingsByVehicleId(Long vehicleId) {
+        Optional<Vehicle> vehicleOptional = vehicleRepository.findById(vehicleId);
+
+        if (vehicleOptional.isPresent()) {
+            Vehicle vehicle = vehicleOptional.get();
+            List<GasFilling> gasFillings = gasFillingRepo.findAllByVehicleId(vehicle);
+
+            for (GasFilling gasFilling : gasFillings) {
+                gasFillingRepo.delete(gasFilling);
+            }
+        }
+    }
+
+    @Override
     public void updateGasFillingById(GasFillingDto gasFillingDto, Long gasFillingId) {
         Optional<GasFilling> gasFillingOptional = gasFillingRepo.findById(gasFillingDto.getId());
         gasFillingOptional.ifPresent(gasFilling -> {

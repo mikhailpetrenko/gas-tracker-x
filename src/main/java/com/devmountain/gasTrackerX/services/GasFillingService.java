@@ -11,5 +11,6 @@ public interface GasFillingService {
     void updateGasFillingById(GasFillingDto gasFillingDto, Long gasFillingId);
     Optional<GasFillingDto> getGasFillingById(Long gasFillingId);
     List<GasFillingDto> getAllGasFillingsByVehicle(Long vehicleId);
+    void deleteGasFillingsByVehicleId(Long vehicleId);
 
 }

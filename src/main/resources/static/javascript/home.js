@@ -61,8 +61,34 @@ async function getVehicles(userId) {
     }
 }
 
+
+async function deleteGasFillingsByVehicleId(vehicleId) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/gasfillings/vehicle/${vehicleId}`, {
+            method: "DELETE",
+            headers: headers,
+        });
+
+        if (response.status === 204) {
+            // Gas fillings deleted successfully
+            console.log("Gas fillings deleted successfully.");
+        } else {
+            // Handle errors here, if necessary
+            console.error("Failed to delete gas fillings.");
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+
+
+
 async function handleDelete(vehicleId) {
     try {
+        await deleteGasFillingsByVehicleId(vehicleId);
+
+
         await fetch(baseUrl + vehicleId, {
             method: "DELETE",
             headers: headers
@@ -72,6 +98,10 @@ async function handleDelete(vehicleId) {
         console.error(err);
     }
 }
+//!!!!!-=-----------------------------------------------------------
+
+
+//===================================================================
 
 async function getVehicleById(vehicleId) {
     try {
